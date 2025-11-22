@@ -26,59 +26,75 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 500px;
+            width: 100%;
             margin: 0 auto;
-            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-sizing: border-box;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            flex-wrap: wrap;
         }
 
         h2 {
             font-size: 1.5rem;
-            margin: 1.5rem 0 1rem;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        #modeToggle {
+            padding: 8px 16px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 10px;
         }
 
         button {
-            padding: 12px 20px;
-            font-size: 1rem;
+            padding: 10px 20px;
             background-color: var(--button-bg);
             color: var(--button-text);
             border: none;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
-            margin-top: 12px;
-            box-sizing: border-box;
+            max-width: 400px;
+            margin-top: 20px;
         }
 
         button:hover {
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
-        #modeToggle {
-            position: fixed;
-            top: 16px;
-            right: 16px;
-            z-index: 100;
-            width: auto;
+        #status {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
         }
 
-        #status,
         #feedback {
             margin-top: 20px;
-            font-size: 1rem;
             text-align: center;
         }
 
         #speedChart {
             width: 100%;
+            max-width: 100%;
             margin-top: 30px;
         }
 
@@ -127,10 +143,12 @@
 </head>
 
 <body>
-    <button id="modeToggle" onclick="toggleMode()">🌙 모드 전환</button>
-
     <div class="container">
-        <h2>📶 네트워크 속도 측정기</h2>
+        <div class="header">
+            <h2>📶 네트워크 속도 측정기</h2>
+            <button id="modeToggle" onclick="toggleMode()">🌙 모드 전환</button>
+        </div>
+
         <button onclick="startTest()">속도 측정 시작</button>
         <p id="status"></p>
         <canvas id="speedChart" style="display:none;"></canvas>
@@ -148,8 +166,7 @@
         }
 
         function startTest() {
-            document.getElementById("status").innerHTML =
-                "⏳ 측정 중입니다... 잠시만 기다려 주세요. <span class='dots'><span></span><span></span><span></span></span>";
+            document.getElementById("status").innerHTML = "⏳ 측정 중입니다... <span class='dots'><span></span><span></span><span></span></span>";
             document.getElementById("feedback").innerHTML = "";
             document.getElementById("speedChart").style.display = "none";
 
@@ -182,11 +199,8 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
                     scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                        y: { beginAtZero: true }
                     }
                 }
             });
@@ -206,6 +220,7 @@
         📤 업로드: ${u} Mbps - ${u >= avgUpload ? "업로드 빠름" : u >= 50 ? "사용 가능" : "업로드 느림"} ✅<br>
         📶 핑: ${p} ms - ${p <= 10 ? "최적" : p <= avgPing ? "매우 안정적" : "지연 있음"} ✅
       `;
+
             document.getElementById("feedback").innerHTML = result;
         }
     </script>
