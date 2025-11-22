@@ -21,73 +21,81 @@
             --button-text: #ffffff;
         }
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            min-height: 100vh;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
         }
 
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             padding: 24px;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
 
-        h2 {
+        .header {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            font-size: 1.5em;
-            text-align: center;
+            width: 100%;
             margin-bottom: 20px;
         }
 
-        #modeToggle {
-            align-self: flex-end;
-            margin-bottom: 10px;
+        .title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        button {
-            padding: 12px 20px;
+        #modeToggle {
+            padding: 8px 14px;
+            font-size: 0.9rem;
             background-color: var(--button-bg);
             color: var(--button-text);
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
-            max-width: 400px;
-            margin-top: 12px;
-            font-size: 1rem;
         }
 
-        button:hover {
+        button.action {
+            padding: 12px 24px;
+            font-size: 1rem;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin: 12px 0;
+        }
+
+        button.action:hover {
             opacity: 0.9;
         }
 
-        #status {
-            margin-top: 20px;
-            font-weight: bold;
-            text-align: center;
-        }
-
+        #status,
         #feedback {
             margin-top: 20px;
             text-align: center;
+            font-size: 1rem;
         }
 
         #speedChart {
-            max-width: 100%;
             margin-top: 30px;
+            width: 100%;
         }
 
         canvas {
@@ -133,12 +141,13 @@
         }
 
         @media (max-width: 480px) {
-            h2 {
-                font-size: 1.2em;
+            .title {
+                font-size: 1.2rem;
             }
 
-            button {
-                font-size: 0.95em;
+            #modeToggle {
+                font-size: 0.8rem;
+                padding: 6px 10px;
             }
         }
     </style>
@@ -146,9 +155,13 @@
 
 <body>
     <div class="container">
-        <button id="modeToggle" onclick="toggleMode()">🌙 모드 전환</button>
-        <h2>📶 네트워크 속도 측정기</h2>
-        <button onclick="startTest()">속도 측정 시작</button>
+        <div class="header">
+            <div class="title">📶 네트워크 속도 측정기</div>
+            <button id="modeToggle" onclick="toggleMode()">🌙 모드 전환</button>
+        </div>
+
+        <button class="action" onclick="startTest()">속도 측정 시작</button>
+
         <p id="status"></p>
         <canvas id="speedChart" style="display:none;"></canvas>
         <div id="feedback"></div>
@@ -165,7 +178,8 @@
         }
 
         function startTest() {
-            document.getElementById("status").innerHTML = "⏳ 측정 중입니다... 잠시만 기다려 주세요. <span class='dots'><span></span><span></span><span></span></span>";
+            document.getElementById("status").innerHTML =
+                "⏳ 측정 중입니다... 잠시만 기다려 주세요. <span class='dots'><span></span><span></span><span></span></span>";
             document.getElementById("feedback").innerHTML = "";
             document.getElementById("speedChart").style.display = "none";
 
