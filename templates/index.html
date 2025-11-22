@@ -26,47 +26,39 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
-            max-width: 500px;
             width: 100%;
-            margin: 0 auto;
+            max-width: 500px;
+            padding: 24px;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            flex-wrap: wrap;
+            justify-content: center;
         }
 
         h2 {
-            font-size: 1.5rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            margin: 0;
+            font-size: 1.5em;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         #modeToggle {
-            padding: 8px 16px;
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 10px;
+            align-self: flex-end;
+            margin-bottom: 10px;
         }
 
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             background-color: var(--button-bg);
             color: var(--button-text);
             border: none;
@@ -74,7 +66,8 @@
             cursor: pointer;
             width: 100%;
             max-width: 400px;
-            margin-top: 20px;
+            margin-top: 12px;
+            font-size: 1rem;
         }
 
         button:hover {
@@ -93,7 +86,6 @@
         }
 
         #speedChart {
-            width: 100%;
             max-width: 100%;
             margin-top: 30px;
         }
@@ -139,16 +131,23 @@
                 opacity: 1;
             }
         }
+
+        @media (max-width: 480px) {
+            h2 {
+                font-size: 1.2em;
+            }
+
+            button {
+                font-size: 0.95em;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="header">
-            <h2>📶 네트워크 속도 측정기</h2>
-            <button id="modeToggle" onclick="toggleMode()">🌙 모드 전환</button>
-        </div>
-
+        <button id="modeToggle" onclick="toggleMode()">🌙 모드 전환</button>
+        <h2>📶 네트워크 속도 측정기</h2>
         <button onclick="startTest()">속도 측정 시작</button>
         <p id="status"></p>
         <canvas id="speedChart" style="display:none;"></canvas>
@@ -166,7 +165,7 @@
         }
 
         function startTest() {
-            document.getElementById("status").innerHTML = "⏳ 측정 중입니다... <span class='dots'><span></span><span></span><span></span></span>";
+            document.getElementById("status").innerHTML = "⏳ 측정 중입니다... 잠시만 기다려 주세요. <span class='dots'><span></span><span></span><span></span></span>";
             document.getElementById("feedback").innerHTML = "";
             document.getElementById("speedChart").style.display = "none";
 
@@ -200,7 +199,9 @@
                 options: {
                     responsive: true,
                     scales: {
-                        y: { beginAtZero: true }
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
             });
